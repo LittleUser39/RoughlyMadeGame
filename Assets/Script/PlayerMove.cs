@@ -6,6 +6,7 @@ public class PlayerMove : MonoBehaviour
 {
     [SerializeField]
     float speed;
+    UIManager manager;
 
     Rigidbody2D rigid;
     Animator anim;
@@ -22,12 +23,15 @@ public class PlayerMove : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
-
+private void Start() {
+    manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<UIManager>();
+}
     private void Update()
     {
         Move();
         LookAt();
         Action();
+        OpenMenu();
     }
 
     void Move()
@@ -89,6 +93,12 @@ public class PlayerMove : MonoBehaviour
                 }
             }
         }
+    }
+    void OpenMenu()
+    {
+        if(Input.GetButtonDown("Menu"))
+            manager.SetActiveDialog(!manager.GetActiveDialog());
+        
     }
 
     private void FixedUpdate()
