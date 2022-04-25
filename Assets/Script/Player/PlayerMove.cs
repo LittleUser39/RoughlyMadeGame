@@ -7,6 +7,11 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     float speed;
 
+    [SerializeField]
+    GameObject UI;
+
+    InventoryUI invenUI;
+
     Rigidbody2D rigid;
     Animator anim;
 
@@ -33,7 +38,12 @@ public class PlayerMove : MonoBehaviour
     void Move()
     {
         if (isActing)
+        {
+            h = 0;
+            v = 0;
+            anim.SetBool("isMove", false);
             return;
+        }
 
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
@@ -48,7 +58,7 @@ public class PlayerMove : MonoBehaviour
         else if (vDown || hUp)
             ishMove = false;
         else if (hUp || vUp)
-            ishMove = h != 0;
+            ishMove = h == 0;
 
         anim.SetFloat("vSpeed", v);
         anim.SetFloat("hSpeed", h);
@@ -75,9 +85,9 @@ public class PlayerMove : MonoBehaviour
 
     void Action()
     {
-        Debug.DrawRay(transform.position, dirVec * 1.3f, new Color(0, 1, 0));
         if (Input.GetButtonDown("Action"))
         {
+            Debug.DrawRay(transform.position, dirVec * 1.3f, new Color(0, 1, 0));
             RaycastHit2D rayHit = Physics2D.Raycast(transform.position, dirVec, 1.3f, LayerMask.GetMask("Object", "NPC"));
             if (null != rayHit.collider)
             {
@@ -88,6 +98,12 @@ public class PlayerMove : MonoBehaviour
                     return;
                 }
             }
+        }
+
+        if (Input.GetButtonDown("Inventory"))
+        {
+            UI.SetActive(!UI.activeSelf);
+            invenUI.UpdateUI();
         }
     }
 
