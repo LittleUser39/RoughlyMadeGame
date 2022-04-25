@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class StateUI : MonoBehaviour
 {
-  public Text PHp;
+  public Text pName;
+  public Text pHp;
   public Text pDamage;
   public Text pAgility;
   

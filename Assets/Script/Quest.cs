@@ -57,6 +57,10 @@ public class Quest : MonoBehaviour
         isActive = false;
         Debug.Log(title + "가 완료됨");
     }
+    public bool SetActive()
+    {
+        return (!isActive);
+    }
     public bool ReAction()
     {
         if(!isStarted) //수락 전

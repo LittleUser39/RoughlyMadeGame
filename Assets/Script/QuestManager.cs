@@ -22,8 +22,6 @@ private Quest curQuest;
    }
 
    private void Update() {
-       if(Input.GetKeyDown(KeyCode.Q))
-       {
            if(null != curQuest)
            {
             title.text = curQuest.title;
@@ -34,8 +32,6 @@ private Quest curQuest;
                title.text = "퀘스트 없음";
                description.text = "  ";
            }
-            ui.SetActive(!ui.activeSelf);
-       }
    }
    public void QuestStart(Quest quest)
    {
