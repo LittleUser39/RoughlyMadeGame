@@ -7,7 +7,13 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Transform pfChracterBattle;
     //[SerializeField] private Transform pfEnemyBattle;
 
+    public Transform[] enemySpawnSpot;
+    public Transform[] playerSpawnSpot;
+    
     bool isBattleStarted=false;
+
+    List<GameObject> playerUnits;
+    List<GameObject> enemyUnits ;
     List<GameObject> battleTurn;
     private static BattleManager _instance;
  
@@ -22,6 +28,8 @@ public class BattleManager : MonoBehaviour
     {   
         DontDestroyOnLoad(gameObject);
         _instance = this;
+        playerUnits = new List<GameObject>();
+        enemyUnits = new List<GameObject>();
     }
 
     private void Update()
@@ -29,6 +37,34 @@ public class BattleManager : MonoBehaviour
         //if()
     }
 
+    public void SetBattleUnits(BattleObjectData enemy, BattleObjectData player)
+    {
+        
+        for(int i=0 ; i<Random.Range(1,4); ++i)
+        {
+            enemyUnits.Add(enemy.prefab);
+        }
+        playerUnits.Add(player.prefab);
+        
+        PlaceUnits();
+        
+    }
+    private void PlaceUnits()
+    {
+        for(int i =0; i<playerUnits.Count;++i)
+        {
+            Vector2 pos = playerUnits[i].transform.position = playerSpawnSpot[i].position;
+            GameObject player = Instantiate(playerUnits[i],pos,Quaternion.identity);
+            player.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        for(int i =0; i<enemyUnits.Count;++i)
+        {
+            Vector2 pos = enemyUnits[i].transform.position = enemySpawnSpot[i].position;
+            Instantiate(enemyUnits[i],pos,Quaternion.identity);
+        }
+        
+        
+    }
     public bool BattleCount()
     {
         return false;
