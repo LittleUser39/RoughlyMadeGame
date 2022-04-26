@@ -17,6 +17,8 @@ public class Quest : MonoBehaviour
    public bool isActive;    //퀘스트가 가능한 상황
    public bool isStarted = false; //퀘스트가 수락됨
    public bool isFinished = false; //퀘스트 완료
+   
+   bool isCheak;
 
    public QuestType type;
 
@@ -57,9 +59,9 @@ public class Quest : MonoBehaviour
         isActive = false;
         Debug.Log(title + "가 완료됨");
     }
-    public bool SetActive()
+    public void SetActive()
     {
-        return (!isActive);
+        isActive = true;
     }
     public bool ReAction()
     {
