@@ -16,5 +16,6 @@ MonoBehaviour:
   name: Player
   HP: 100
   agility: 5
+  DefaultAgility: 5
   damage: 10
   elementalAttribute: 1

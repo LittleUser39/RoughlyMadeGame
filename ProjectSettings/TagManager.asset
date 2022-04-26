@@ -7,6 +7,7 @@ TagManager:
   - NPC
   - GameManager
   - Monster
+  - Companion
   layers:
   - Default
   - TransparentFX

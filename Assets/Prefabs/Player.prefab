@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 833168156250949510}
   - component: {fileID: 833168156250949511}
   - component: {fileID: 6612581287506097874}
+  - component: {fileID: 732639807}
+  - component: {fileID: 4582135725608076052}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -169,7 +171,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1eb79a9e2bdfde4fb4688f6c5331bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleObjData: {fileID: 0}
+  battleObjData: {fileID: 11400000, guid: 2f1d5b068907dbc4f9ff7a1373b783b4, type: 2}
+--- !u!114 &732639807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833168156250949532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e83e75354986121459d2c27f75a8f24b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTurn: 0
+  moveSpeed: 10
+--- !u!114 &4582135725608076052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833168156250949532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09587400c62010a4c8e7c1c51f545be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pfAgilBar: {fileID: 8505748925521445256, guid: bc463222a0df00f4f8e945a947869d85,
+    type: 3}
+  AgilCanvas: {fileID: 0}
+  height: 0.7
 --- !u!1 &833168157011430895
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &833168157011430675
 Transform:
   m_ObjectHideFlags: 0

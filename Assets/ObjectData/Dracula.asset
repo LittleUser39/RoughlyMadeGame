@@ -16,5 +16,6 @@ MonoBehaviour:
   name: Dracula
   HP: 100
   agility: 4
+  DefaultAgility: 4
   damage: 10
   elementalAttribute: 2
