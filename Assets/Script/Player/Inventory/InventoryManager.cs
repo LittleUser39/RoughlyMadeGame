@@ -23,6 +23,14 @@ public class InventoryManager : MonoBehaviour
         _instance = this;
     }
 
+    private void Update()
+    {
+        if (Input.GetButtonDown("Inventory"))
+        {
+            inventoryUI.gameObject.SetActive(!inventoryUI.gameObject.activeSelf);
+        }
+    }
+
     public bool Add(InventoryItemData item)
     {
         if (items.Count == maxSize)

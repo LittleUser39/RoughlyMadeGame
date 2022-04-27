@@ -5,9 +5,12 @@ using UnityEngine;
 public class NPC : MonoBehaviour,IInterAction
 {
    public Conversation conversation;
-  public Quest[] quests;
-  //public Quest curQuest = null;
-  private void Awake() {
+   public Quest[] quests;
+   //public Quest curQuest = null;
+
+
+
+   private void Awake() {
     quests = GetComponentsInChildren<Quest>();
   }
   public bool ReAction()

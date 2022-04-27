@@ -8,7 +8,9 @@ public class Talk : MonoBehaviour
     public Text talkName; // 실제 채팅이 나오는 텍스트
     public Text talkDescription; // 캐릭터 이름이 나오는 텍스트
 
-    private string writeText = "";
+    public GameObject btn;
+
+    private string writerText = "";
 
     bool isButtonClicked = false;
 
@@ -23,17 +25,24 @@ public class Talk : MonoBehaviour
             isButtonClicked = true;
     }
 
+    void ShowButton()
+    {
+        btn.SetActive(false);
+
+        if (Input.GetButtonDown("Jump"))
+            btn.SetActive(true);
+    }
 
     IEnumerator Effects(string name, string description)
     {
         talkName.text = name;
-        writeText = "";
+        writerText = "";
 
         //텍스트 타이핑 효과
         for (int temp = 0; temp < description.Length; temp++)
         {
-            writeText += description[temp];
-            talkDescription.text = writeText;
+            writerText += description[temp];
+            talkDescription.text = writerText;
             yield return null;
         }
 
@@ -56,5 +65,6 @@ public class Talk : MonoBehaviour
         yield return StartCoroutine(Effects("너", "아니 싯팔 되는 게 하나도 없어!"));
         yield return StartCoroutine(Effects("너", "뭐라도 얻어보기 위해.. 머리를 좀 식히기 위해"));
         yield return StartCoroutine(Effects("너", "지금부터 이세계로 떠나는 거야!!"));
+        ShowButton();
     }
 }

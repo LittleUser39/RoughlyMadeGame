@@ -7,11 +7,6 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     float speed;
 
-    [SerializeField]
-    GameObject UI;
-
-    InventoryUI invenUI;
-
     Rigidbody2D rigid;
     Animator anim;
 
@@ -53,12 +48,12 @@ public class PlayerMove : MonoBehaviour
         bool hUp = Input.GetButtonUp("Horizontal");
         bool vUp = Input.GetButtonUp("Vertical");
 
-        if (hDown)
+        if (hDown || vUp)
             ishMove = true;
-        else if (vDown)
+        else if (vDown || hUp)
             ishMove = false;
         else if (hUp || vUp)
-            ishMove = h != 0;
+            ishMove = h == 0;
 
         anim.SetFloat("vSpeed", v);
         anim.SetFloat("hSpeed", h);
@@ -98,12 +93,6 @@ public class PlayerMove : MonoBehaviour
                     return;
                 }
             }
-        }
-
-        if (Input.GetButtonDown("Inventory"))
-        {
-            UI.SetActive(!UI.activeSelf);
-            invenUI.UpdateUI();
         }
     }
 
