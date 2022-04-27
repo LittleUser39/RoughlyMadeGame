@@ -53,12 +53,12 @@ public class PlayerMove : MonoBehaviour
         bool hUp = Input.GetButtonUp("Horizontal");
         bool vUp = Input.GetButtonUp("Vertical");
 
-        if (hDown || vUp)
+        if (hDown)
             ishMove = true;
-        else if (vDown || hUp)
+        else if (vDown)
             ishMove = false;
         else if (hUp || vUp)
-            ishMove = h == 0;
+            ishMove = h != 0;
 
         anim.SetFloat("vSpeed", v);
         anim.SetFloat("hSpeed", h);

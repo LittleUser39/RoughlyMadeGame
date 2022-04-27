@@ -8,7 +8,7 @@ public class Talk : MonoBehaviour
     public Text talkName; // 실제 채팅이 나오는 텍스트
     public Text talkDescription; // 캐릭터 이름이 나오는 텍스트
 
-    private string writerText = "";
+    private string writeText = "";
 
     bool isButtonClicked = false;
 
@@ -27,13 +27,13 @@ public class Talk : MonoBehaviour
     IEnumerator Effects(string name, string description)
     {
         talkName.text = name;
-        writerText = "";
+        writeText = "";
 
         //텍스트 타이핑 효과
         for (int temp = 0; temp < description.Length; temp++)
         {
-            writerText += description[temp];
-            talkDescription.text = writerText;
+            writeText += description[temp];
+            talkDescription.text = writeText;
             yield return null;
         }
 
