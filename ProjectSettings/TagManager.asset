@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - NPC
   - GameManager
+  - UI
+  - NPC
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - 
   - Player
   - NPC
-  - Object
-  - Item
+  - Objects
+  - UI
   - 
   - 
   - 
@@ -27,9 +28,9 @@ TagManager:
   - 
   - 
   - 
-  - Layer 1
-  - Layer 2
-  - Layer 3
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -43,15 +44,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Characters
-    uniqueID: 2425651459
+  - name: Player
+    uniqueID: 3962273193
     locked: 0
   - name: NPC
-    uniqueID: 4250941897
+    uniqueID: 264437557
+    locked: 0
+  - name: Objects
+    uniqueID: 146964917
     locked: 0
   - name: UI
-    uniqueID: 4189426099
-    locked: 0
-  - name: 
-    uniqueID: 1568286957
+    uniqueID: 973648191
     locked: 0
