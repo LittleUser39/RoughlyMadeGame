@@ -7,7 +7,6 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     float speed;
     UIManager manager;
-
     Rigidbody2D rigid;
     Animator anim;
 
@@ -22,10 +21,9 @@ public class PlayerMove : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<UIManager>();
     }
-private void Start() {
-    manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<UIManager>();
-}
+
     private void Update()
     {
         Move();
@@ -37,7 +35,12 @@ private void Start() {
     void Move()
     {
         if (isActing)
+        {
+            h = 0;
+            v = 0;
+            anim.SetBool("isMove", false);
             return;
+        }
 
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
@@ -52,7 +55,7 @@ private void Start() {
         else if (vDown || hUp)
             ishMove = false;
         else if (hUp || vUp)
-            ishMove = h != 0;
+            ishMove = h == 0;
 
         anim.SetFloat("vSpeed", v);
         anim.SetFloat("hSpeed", h);
@@ -79,9 +82,9 @@ private void Start() {
 
     void Action()
     {
-        Debug.DrawRay(transform.position, dirVec * 1.3f, new Color(0, 1, 0));
         if (Input.GetButtonDown("Action"))
         {
+            Debug.DrawRay(transform.position, dirVec * 1.3f, new Color(0, 1, 0));
             RaycastHit2D rayHit = Physics2D.Raycast(transform.position, dirVec, 1.3f, LayerMask.GetMask("Object", "NPC"));
             if (null != rayHit.collider)
             {
@@ -94,16 +97,17 @@ private void Start() {
             }
         }
     }
-    void OpenMenu()
-    {
-        if(Input.GetButtonDown("Menu"))
-            manager.SetActiveDialog(!manager.GetActiveDialog());
-        
-    }
 
     private void FixedUpdate()
     {
         Vector2 moveVec = ishMove ? new Vector2(h, 0) : new Vector2(0, v);
         rigid.velocity = moveVec * speed;
+    }
+
+     void OpenMenu()
+    {
+        if(Input.GetButtonDown("Menu"))
+            manager.SetActiveDialog(!manager.GetActiveDialog());
+        
     }
 }

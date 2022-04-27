@@ -29,6 +29,24 @@ public class Conversation : MonoBehaviour
            converIndex = 0;
            return false;
        }
-      
+    } 
+    public bool Store()
+    {
+        if (converIndex < conversation.Length)
+        {
+            manager.SetActiveDialog(true);
+            manager.SetDialogContent(title, conversation[converIndex]);
+            manager.SetActiveStore(false);
+            converIndex++;
+            return true;
+        }
+        else
+        {
+            manager.SetActiveDialog(false);
+            manager.SetActiveStore(true);
+            converIndex = 0;
+            return false;
+        }
+    
    }
 }
