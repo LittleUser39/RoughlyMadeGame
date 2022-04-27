@@ -13,7 +13,7 @@ public class EnemyMoveBattle : MonoBehaviour
     {
         if(isMoving)
         {
-            Debug.Log(dir);
+            
             transform.Translate(dir*moveSpeed*Time.deltaTime);
         }
     }
@@ -25,7 +25,7 @@ public class EnemyMoveBattle : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag=="Player"||other.gameObject.tag=="Companion" && isTurn)
+        if((other.gameObject.tag=="Player"||other.gameObject.tag=="Companion") && isTurn)
         {
             dir = (prevPos - (Vector2)transform.position).normalized;
             StartCoroutine(StopMoving());
@@ -38,6 +38,5 @@ public class EnemyMoveBattle : MonoBehaviour
         transform.position = prevPos;
         BattleManager.instance.isBattlePaused = false;
         isTurn=false;
-        StopCoroutine(StopMoving());
     }
 }

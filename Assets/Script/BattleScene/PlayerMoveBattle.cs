@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class PlayerMoveBattle : MonoBehaviour
 {   
+    public GameObject explosive;
+    Vector2 beamDir;
+    uint explosionCounter = 0;
     public bool isTurn;
     public float moveSpeed = 1f;
     Vector2 prevPos;
     Vector2 dir;
     bool isMoving=false;
+    bool isSkill=false;
     private void FixedUpdate()
     {
         if(isMoving)
@@ -38,6 +42,31 @@ public class PlayerMoveBattle : MonoBehaviour
         transform.position = prevPos;
         BattleManager.instance.isBattlePaused = false;
         isTurn=false;
-        StopCoroutine(StopMoving());
+    }
+
+    public void UseSkill(Vector2 dir)
+    {
+        beamDir = dir;
+        isSkill=true;
+        StartCoroutine(SkillExplode());
+    }
+    public void Explosion()
+    {
+        ++explosionCounter;
+        Instantiate(explosive,new Vector2(transform.position.x+beamDir.x*explosionCounter,transform.position.y+beamDir.y*explosionCounter),Quaternion.identity);
+        Invoke("Explosion",0.2f); 
+        if(explosionCounter >=10)
+        {
+            CancelInvoke();
+            explosionCounter = 0;
+            isSkill=false;   
+            BattleManager.instance.isBattlePaused = false;   
+        }   
+    }
+    IEnumerator SkillExplode()
+    {
+        yield return new WaitForSeconds(0.2f);
+        Invoke("Explosion",0.2f); 
+        
     }
 }

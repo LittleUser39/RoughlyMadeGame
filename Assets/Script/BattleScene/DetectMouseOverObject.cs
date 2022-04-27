@@ -7,6 +7,15 @@ using UnityEngine.UI;
 public class DetectMouseOverObject : MonoBehaviour
 {
     public int index;
+
+    // public enum buttonState
+    // {
+    //     ATTACK,
+    //     SKILL,
+    //     ITEM,
+    //     ESCAPE,
+    // }
+    public string bState;
     public void CheckInterActable()
     {
         if(GetComponent<Button>().interactable)
@@ -14,8 +23,23 @@ public class DetectMouseOverObject : MonoBehaviour
            BattleManager.instance.ShowSelectedMonster(index);
         }
     }
-    public void OnClickAttack()
+    public void OnClick()
     {
-        BattleManager.instance.AttackMonster(index);
+        Debug.Log(bState);
+        switch(bState)
+        {
+            case "ATTACK":
+            BattleManager.instance.AttackMonster(index);
+            break;
+            case "SKILL":
+            BattleManager.instance.UseSkill(index);
+            break;
+            case "ITEM":
+            BattleManager.instance.UseItem(index);
+            break;
+            case "ESCAPE":
+            break;
+        }
+        
     }
 }

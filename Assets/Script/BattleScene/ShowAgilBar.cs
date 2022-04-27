@@ -25,16 +25,13 @@ public class ShowAgilBar : MonoBehaviour
     }
     private void Update()
     {
-        Vector3 _hpBarPos = 
-            Camera.main.WorldToScreenPoint(new Vector3(transform.position.x,transform.position.y+height,0));
-        agilBar.position = _hpBarPos;
         curAgilBar.fillAmount = (float)curAgil / (float)DefaultAgil;
     }
 
-    public void GetCurHP(int _curHP, int _maxHP)
+    public void GetCurAgil(int _curAgil, int _default)
     {
-        curAgil = _curHP;
-        DefaultAgil = _maxHP;
+        curAgil = _curAgil;
+        DefaultAgil = _default;
         // if(curAgil<=0)
         // {
         //     Destroy(pfAgilBar);

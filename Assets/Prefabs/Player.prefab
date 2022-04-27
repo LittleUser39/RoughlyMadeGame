@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6612581287506097874}
   - component: {fileID: 732639807}
   - component: {fileID: 4582135725608076052}
+  - component: {fileID: 7734555312027647977}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -171,7 +172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1eb79a9e2bdfde4fb4688f6c5331bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleObjData: {fileID: 11400000, guid: 2f1d5b068907dbc4f9ff7a1373b783b4, type: 2}
 --- !u!114 &732639807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e83e75354986121459d2c27f75a8f24b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosive: {fileID: 3459353269473970399, guid: fd3383d7acd6cc844809c398eeb49d41,
+    type: 3}
   isTurn: 0
   moveSpeed: 10
 --- !u!114 &4582135725608076052
@@ -193,15 +195,34 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833168156250949532}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09587400c62010a4c8e7c1c51f545be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pfAgilBar: {fileID: 8505748925521445256, guid: bc463222a0df00f4f8e945a947869d85,
     type: 3}
-  AgilCanvas: {fileID: 0}
   height: 0.7
+--- !u!114 &7734555312027647977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833168156250949532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b6397daed62694a82bf03cd65d33df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 2f1d5b068907dbc4f9ff7a1373b783b4, type: 2}
+  playerName: 
+  defaultAgility: 0
+  agility: 0
+  maxHP: 0
+  curHP: 0
+  damage: 0
+  battlePos: {x: 0, y: 0}
 --- !u!1 &833168157011430895
 GameObject:
   m_ObjectHideFlags: 0
