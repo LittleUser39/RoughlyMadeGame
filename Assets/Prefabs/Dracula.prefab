@@ -190,7 +190,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3070550250112975341}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 39.94, y: -0.060000062, z: 188.3606}
+  m_LocalPosition: {x: 40.35, y: 2.92, z: 188.3606}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3069128099175963345}
@@ -216,7 +216,7 @@ SortingGroup:
   m_GameObject: {fileID: 3070550250112975341}
   m_Enabled: 1
   m_SortingLayerID: -1869315837
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
 --- !u!114 &2911649976991900676
 MonoBehaviour:

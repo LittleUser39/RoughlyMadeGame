@@ -96,6 +96,7 @@ public class PlayerMove : MonoBehaviour
                 }
             }
         }
+        
     }
 
     private void FixedUpdate()
@@ -109,5 +110,15 @@ public class PlayerMove : MonoBehaviour
         if(Input.GetButtonDown("Menu"))
             manager.SetActiveDialog(!manager.GetActiveDialog());
         
+    }
+    public void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.tag == "villagewarp")
+        {
+           transform.Translate(0f,15,0);
+        }
+        if(other.gameObject.tag == "forestwarp")
+        {
+            transform.Translate(0,-20,0);
+        }
     }
 }
