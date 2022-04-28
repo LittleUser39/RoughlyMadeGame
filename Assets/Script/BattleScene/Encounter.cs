@@ -13,7 +13,7 @@ public class Encounter : MonoBehaviour
         {
             enemyData =other.gameObject.GetComponent<MonsterEncounter>().enemyObjectData ;
             
-            BattleManager.instance.SetBattleUnits(enemyData, gameObject.GetComponent<Player>());
+            GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>().SetBattleUnits(enemyData, gameObject.GetComponent<Player>());
         }
     }
 }

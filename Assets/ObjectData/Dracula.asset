@@ -15,9 +15,9 @@ MonoBehaviour:
   prefab: {fileID: 3070550250112975341, guid: 56067b4955aa0234b9b8cab9a727d9cc, type: 3}
   name: Dracula
   HP: 100
-  minAgility: 2.1
-  maxAgility: 4.9
+  minAgility: 2.9
+  maxAgility: 5.5
   agility: 0
   DefaultAgility: 0
-  damage: 10
+  damage: 20
   elementalAttribute: 2

@@ -22,6 +22,7 @@ public class EnemyMoveBattle : MonoBehaviour
         prevPos = transform.position;
         dir = _dir;
         isMoving=true;
+        
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -36,7 +37,7 @@ public class EnemyMoveBattle : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isMoving = false;
         transform.position = prevPos;
-        BattleManager.instance.isBattlePaused = false;
+        GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>().isBattlePaused = false;
         isTurn=false;
     }
 }

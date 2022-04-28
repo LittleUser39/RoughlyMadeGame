@@ -19,7 +19,7 @@ public class Monster : MonoBehaviour
     public int index;
 
     public Vector2 battlePos;
-    bool isDead;
+    public bool isDead;
     // private void Awake()
     // {
     //     isDead=false;
@@ -29,4 +29,12 @@ public class Monster : MonoBehaviour
     //     damage = data.damage;
 
     // }
+    private void Update()
+    {
+        if(curHP<=0)
+        {
+            isDead=true;
+        }
+
+    }
 }

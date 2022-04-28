@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class BattleManager : MonoBehaviour
 {
+    public BattleObjectData companionDex;
+    public BattleObjectData companionPower;
     public GameObject[] playerAgilityBars;
     public GameObject[] enemyAgilityBars;
     public Transform[] enemySpawnSpot;
@@ -28,19 +29,19 @@ public class BattleManager : MonoBehaviour
     //List<BattleObjectData> enemyUnits;
     List<Monster>enemyOnField;
     //List<GameObject> battleTurn;
-    private static BattleManager _instance;
+    // private static BattleManager _instance;
  
-    public static BattleManager instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
+    // public static BattleManager instance
+    // {
+    //     get
+    //     {
+    //         return _instance;
+    //     }
+    // }
     private void Awake()
     {   
-        DontDestroyOnLoad(gameObject);
-        _instance = this;
+        //DontDestroyOnLoad(gameObject);
+        //_instance = this;
        // playerUnits = new List<BattleObjectData>();
        // enemyUnits = new List<BattleObjectData>();
       //  battleTurn = new List<GameObject>();
@@ -49,7 +50,10 @@ public class BattleManager : MonoBehaviour
     }
     public void PlayerStatusUpdate()
     {
-        playerStatusUI.GetComponentInChildren<Text>().text = playerOnField[0].playerName + "  "+ playerOnField[0].curHP+" / "+playerOnField[0].maxHP;
+        Text[] playerTeamStatus = playerStatusUI.GetComponentsInChildren<Text>();
+        playerTeamStatus[0].text = playerOnField[0].playerName + "  "+ playerOnField[0].curHP+" / "+playerOnField[0].maxHP;
+       // playerTeamStatus[1].text = playerOnField[1].playerName + "  "+ playerOnField[1].curHP+" / "+playerOnField[1].maxHP;
+       // playerTeamStatus[2].text = playerOnField[2].playerName + "  "+ playerOnField[2].curHP+" / "+playerOnField[2].maxHP;
     }
     public void SetBattleUnits(BattleObjectData enemy, Player player)
     {
@@ -65,6 +69,7 @@ public class BattleManager : MonoBehaviour
             monster.index = i;
             monster.battlePos = enemySpawnSpot[i].position;
             monster.maxHP = enemy.HP;
+            monster.curHP = monster.maxHP;
             monster.damage = enemy.damage;
             monster.monsterName = enemy.name + (i+1); 
             monster.agilityBar = enemyAgilityBars[i];
@@ -91,10 +96,39 @@ public class BattleManager : MonoBehaviour
         Player pObj = playerObj.GetComponent<Player>();
         pObj.agilityBar = playerAgilityBars[0];
         pObj.curAgilBar  = pObj.agilityBar.transform.GetChild(0).GetComponent<Image>();
+
+        //////////플레이어셋업
+        pObj.curHP = player.curHP;
+        pObj.damage = player.damage;
         
         playerOnField.Add(pObj);
+        //////////동료 셋업
+        GameObject companion1Obj = Instantiate(companionDex.prefab,playerSpawnSpot[1].position,Quaternion.identity);
+        companion1Obj.GetComponent<CircleCollider2D>().isTrigger=true;
+        Player companion1 = companion1Obj.GetComponent<Player>();
+        companion1.agilityBar = playerAgilityBars[1];
+        companion1.curAgilBar  = companion1.agilityBar.transform.GetChild(0).GetComponent<Image>();
+
+        companion1.curHP = companionDex.HP;
+        companion1.damage = companionDex.damage;
+        
+        playerOnField.Add(pObj);
+
+        GameObject companion2Obj = Instantiate(companionPower.prefab,playerSpawnSpot[2].position,Quaternion.identity);
+        companion2Obj.GetComponent<CircleCollider2D>().isTrigger=true;
+        Player companion2 = companion1Obj.GetComponent<Player>();
+        companion2.agilityBar = playerAgilityBars[2];
+        companion2.curAgilBar  = companion2.agilityBar.transform.GetChild(0).GetComponent<Image>();
+
+        companion2.curHP = companionPower.HP;
+        companion2.damage = companionPower.damage;
+        
+
         PlayerStatusUpdate();
-        BattleStart();        
+        BattleStart();       
+        btns2=monsterButtons; 
+
+        
     }
 
     private void BattleStart()
@@ -111,9 +145,34 @@ public class BattleManager : MonoBehaviour
             {
                 TakeTurn(obj);
             }
+            PlayerStatusUpdate();
+            //btns2 = monsterStatusUI.transform.GetComponentsInChildren<Button>();
+            for(int i=0; i<enemyOnField.Count;++i)
+            {
+                if(enemyOnField[i].isDead)
+                {
+                    btns2[i]?.gameObject.SetActive(false);
+                    Debug.Log(enemyOnField[i]);
+                    enemyOnField[i].gameObject.SetActive(false);
+                }
+            }
+            int deadCount = 0;
+            for(int i=0; i<enemyOnField.Count;++i)
+            {
+                if(enemyOnField[i].isDead==true)
+                {
+                    ++deadCount;
+                }
+            }
+            if(deadCount==enemyOnField.Count)
+            {
+                BattleEnd();
+            }
+            
         }
         ///테스트용코드
-        if(playerOnField.Count>0)
+    
+        if(playerOnField.Count>0 &&isBattleStarted)
         {
             if(playerOnField[0].curHP<=0)
             {
@@ -126,11 +185,12 @@ public class BattleManager : MonoBehaviour
     {
         for(int i=0; i<enemyOnField.Count;++i)
         {
-            enemyOnField[i].agility -=Time.deltaTime;
+            if(!enemyOnField[i].isDead)
+            {
+                enemyOnField[i].agility -=Time.deltaTime;
+            }        
             enemyOnField[i].curAgilBar.fillAmount = (float)enemyOnField[i].agility / (float)enemyOnField[i].defaultAgility;
             
-            
-
             if(enemyOnField[i].agility<=0)
             {
                 enemyOnField[i].agility  = enemyOnField[i].defaultAgility;
@@ -140,7 +200,11 @@ public class BattleManager : MonoBehaviour
         }
         for(int i=0; i<playerOnField.Count;++i)
         {
-            playerOnField[i].agility -=Time.deltaTime;
+            if(!playerOnField[i].isDead)
+            {
+                playerOnField[i].agility -=Time.deltaTime;
+            }
+            
             playerOnField[i].curAgilBar.fillAmount = (float)playerOnField[i].agility / (float)playerOnField[i].defaultAgility;
            if(playerOnField[i].agility<=0)
             {
@@ -156,7 +220,7 @@ public class BattleManager : MonoBehaviour
     public void TakeTurn(GameObject battleObject)
     {
         isBattlePaused=true;  //순서대기 agilityCounter중지
-        if(battleObject.tag == "Player")
+        if(battleObject.tag == "Player" || battleObject.tag == "Companion")
         {
             PlayerTurn(battleObject);
         }
@@ -185,10 +249,65 @@ public class BattleManager : MonoBehaviour
         eMove.isTurn=true;
 
         ///////테스트용코드
-        playerOnField[0].curHP -=30;
+        playerOnField[0].curHP -=monster.damage;
     }
 
 
+    public void ResetBattle()
+    {
+        
+        for(int i = 0; i<playerAgilityBars.Length;++i)
+        {
+            playerAgilityBars[i] = null;
+        }
+        for(int i = 0; i<enemyAgilityBars.Length;++i)
+        {
+            enemyAgilityBars[i] = null;
+        }
+        for(int i = 0; i<enemySpawnSpot.Length;++i)
+        {
+            enemySpawnSpot[i] = null;
+        }
+        for(int i = 0; i<playerSpawnSpot.Length;++i)
+        {
+            playerSpawnSpot[i] = null;
+        }
+        //mousePointer = null;
+   
+        originalPlayer= null;
+
+        for(int i=0; i<btns.Length;++i)
+        {
+            
+        }
+        for(int i=0; i<btns2.Length;++i)
+        {
+            btns[i].interactable = false;
+            btns[i].gameObject.SetActive(false);
+        }
+
+        //playerTurnUI = null;
+
+        //monsterStatusUI = null;
+
+        //playerStatusUI = null;
+
+
+             
+        isBattleStarted=false;
+        isBattlePaused=false;
+        for(int i=0; i<playerOnField.Count;++i)
+        {
+            Destroy(playerOnField[i]);
+            playerOnField[i]=null;
+        }
+        for(int i=0; i<enemyOnField.Count;++i)
+        {
+            Destroy(enemyOnField[i]);
+            enemyOnField[i]=null;
+        }
+
+    }
     public void BattleEnd()
     {
         //플레이어팀 전멸 시 
@@ -198,7 +317,8 @@ public class BattleManager : MonoBehaviour
 
         //플레이어 팀 승리 시
         //플레이어 데이터를 이동플레이어 데이터로 옮기고 배틀은 지우고
-        //배틀매니저 초기화하고
+         //배틀매니저 초기화하고
+        
         //카메라매니저로 카메라 전환시키고
         //필드 초기화 -> 랜덤 다시 함수 여기서 호출
         
@@ -209,9 +329,19 @@ public class BattleManager : MonoBehaviour
         Debug.Log("오리지날" + originalPlayer.curHP);
 
         isBattleStarted=false;
-        
-        
-        
+        //ResetBattle();
+        for(int i=0; i<playerOnField.Count;++i)
+        {
+            Destroy(playerOnField[i].gameObject);
+            playerOnField[i]=null;
+        }
+        for(int i=0; i<enemyOnField.Count;++i)
+        {
+            Destroy(enemyOnField[i].gameObject);
+            enemyOnField[i]=null;
+        }
+        GameManager.instance.ResetBM(gameObject);
+         
     }
 
     private void PlayerTurnUIOFF()
@@ -226,7 +356,7 @@ public class BattleManager : MonoBehaviour
     {
         //버튼으로 이어서 ui끄고 다음ui로 이동하도록
         PlayerTurnUIOFF();
-        btns2 = monsterStatusUI.GetComponentsInChildren<Button>();
+        //btns2 = monsterStatusUI.GetComponentsInChildren<Button>();
         for(int i=0;i<btns2.Length;++i)
         {
             btns2[i].interactable=true;
@@ -255,6 +385,7 @@ public class BattleManager : MonoBehaviour
                     pMove.isTurn=true;
             break;
         }
+        enemyOnField[index].curHP -=playerOnField[0].damage;
     }
     public void ShowSelectedMonster(int index)
     {
@@ -274,7 +405,7 @@ public class BattleManager : MonoBehaviour
     {
         //스킬구현
         PlayerTurnUIOFF();
-        btns2 = monsterStatusUI.GetComponentsInChildren<Button>();
+        //btns2 = monsterStatusUI.GetComponentsInChildren<Button>();
         for(int i=0;i<btns2.Length;++i)
         {
             btns2[i].interactable=true;
@@ -291,6 +422,7 @@ public class BattleManager : MonoBehaviour
             case 0:dir = (enemySpawnSpot[0].position - playerSpawnSpot[0].position).normalized;
                     pMove = playerOnField[0].GetComponent<PlayerMoveBattle>();
                     pMove.UseSkill(dir);
+                    
             break;
             case 1:dir = (enemySpawnSpot[1].position - playerSpawnSpot[0].position).normalized;
                     pMove = playerOnField[0].GetComponent<PlayerMoveBattle>();
@@ -299,8 +431,9 @@ public class BattleManager : MonoBehaviour
             case 2:dir = (enemySpawnSpot[2].position - playerSpawnSpot[0].position).normalized;
                     pMove = playerOnField[0].GetComponent<PlayerMoveBattle>();
                     pMove.UseSkill(dir);
+                    
             break;
-        }
+        }enemyOnField[index].curHP-=playerOnField[0].damage*2;
     }
     public void SelectItem()
     {
@@ -317,13 +450,6 @@ public class BattleManager : MonoBehaviour
         //확률로 도망 가능하도록
         PlayerTurnUIOFF();
     }
-    IEnumerator InBattle()
-    {
-        while(true)
-        {
-            yield return new WaitForSeconds(3f);
-        }
-        
-    }
+
     
 }

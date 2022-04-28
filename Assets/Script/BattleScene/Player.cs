@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     public int curHP;
     public int damage;
     public Vector2 battlePos;
-    bool isDead;
+    public bool isDead;
     private void Awake()
     {
         isDead=false;
@@ -27,6 +27,13 @@ public class Player : MonoBehaviour
         curHP = data.HP;
         damage = data.damage;
 
+    }
+    private void Update()
+    {
+        if(curHP<=0)
+        {
+            isDead=true;
+        }
     }
     
 }

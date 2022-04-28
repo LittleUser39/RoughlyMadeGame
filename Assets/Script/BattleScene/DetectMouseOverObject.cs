@@ -20,7 +20,7 @@ public class DetectMouseOverObject : MonoBehaviour
     {
         if(GetComponent<Button>().interactable)
         {
-           BattleManager.instance.ShowSelectedMonster(index);
+           GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>().ShowSelectedMonster(index);
         }
     }
     public void OnClick()
@@ -29,13 +29,13 @@ public class DetectMouseOverObject : MonoBehaviour
         switch(bState)
         {
             case "ATTACK":
-            BattleManager.instance.AttackMonster(index);
+            GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>().AttackMonster(index);
             break;
             case "SKILL":
-            BattleManager.instance.UseSkill(index);
+            GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>().UseSkill(index);
             break;
             case "ITEM":
-            BattleManager.instance.UseItem(index);
+            GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>().UseItem(index);
             break;
             case "ESCAPE":
             break;

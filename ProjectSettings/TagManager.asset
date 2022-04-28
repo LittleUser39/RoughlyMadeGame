@@ -8,6 +8,7 @@ TagManager:
   - GameManager
   - Monster
   - Companion
+  - BattleManager
   layers:
   - Default
   - TransparentFX

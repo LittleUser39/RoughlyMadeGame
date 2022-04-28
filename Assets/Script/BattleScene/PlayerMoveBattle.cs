@@ -17,7 +17,7 @@ public class PlayerMoveBattle : MonoBehaviour
     {
         if(isMoving)
         {
-            Debug.Log(dir);
+           
             transform.Translate(dir*moveSpeed*Time.deltaTime);
         }
     }
@@ -40,7 +40,7 @@ public class PlayerMoveBattle : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isMoving = false;
         transform.position = prevPos;
-        BattleManager.instance.isBattlePaused = false;
+        GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>().isBattlePaused = false;
         isTurn=false;
     }
 
@@ -60,7 +60,7 @@ public class PlayerMoveBattle : MonoBehaviour
             CancelInvoke();
             explosionCounter = 0;
             isSkill=false;   
-            BattleManager.instance.isBattlePaused = false;   
+            GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>().isBattlePaused = false;   
         }   
     }
     IEnumerator SkillExplode()
